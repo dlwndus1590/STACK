@@ -8,9 +8,11 @@
 ## 버전
 
 [Apache Server] : Server version: Apache/2.4.33 (Unix)
+
 [PHP] : PHP 7.2.4 (cli) (built: Apr 13 2018 14:24:35) ( ZTS )
       Copyright (c) 1997-2018 The PHP Group
       Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+      
 [Mysql] : Ver 14.14 Distrib 5.5.59, for Linux (x86_64) using  EditLine wrapper
 
 
