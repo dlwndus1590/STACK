@@ -15,9 +15,14 @@
       
 [Mysql] : Ver 14.14 Distrib 5.5.59, for Linux (x86_64) using  EditLine wrapper
 
-## mysql Database 생성 및 테이블 생성
+## 접속 방법
+
+clone한 파일들을 stack이라는 폴더에 몰아넣고
+리눅수 우분투 16.04.4 기준
+/usr/local/apache24/htdocs 폴더에 옮기세요
 
 url : localhost/stack/home.php
+로 접속하시면 됩니다.
 
 ## mysql Database 생성 및 테이블 생성
 
