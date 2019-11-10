@@ -1,10 +1,18 @@
-# [데이터베이스 설계](https://startbootstrap.com/template-overviews/sb-admin/)
+# [데이터베이스 설계]
 
-[SB Admin](http://startbootstrap.com/template-overviews/sb-admin/) is an open source, admin dashboard template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+코드 깔끔하게 간소화 시켰습니다.
+회원가입 로그인 게시판 기능들만 남기고 나머지 다 지웠습니다.
 
-## Preview
+작업해서 각자 branch에 공유해주세요.
 
-[![SB Admin Preview](https://startbootstrap.com/assets/img/templates/sb-admin.jpg)](https://blackrockdigital.github.io/startbootstrap-sb-admin/)
+## 버전
+
+[Apache Server] : Server version: Apache/2.4.33 (Unix)
+[PHP] : PHP 7.2.4 (cli) (built: Apr 13 2018 14:24:35) ( ZTS )
+      Copyright (c) 1997-2018 The PHP Group
+      Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+[Mysql] : Ver 14.14 Distrib 5.5.59, for Linux (x86_64) using  EditLine wrapper
+
 
 **[View Live Preview](https://blackrockdigital.github.io/startbootstrap-sb-admin/)**
 
