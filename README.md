@@ -15,67 +15,53 @@
       
 [Mysql] : Ver 14.14 Distrib 5.5.59, for Linux (x86_64) using  EditLine wrapper
 
+## mysql Database 생성 및 테이블 생성
 
-**[View Live Preview](https://blackrockdigital.github.io/startbootstrap-sb-admin/)**
+url : localhost/stack/home.php
 
-## Status
+## mysql Database 생성 및 테이블 생성
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackrockDigital/startbootstrap-sb-admin/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-sb-admin.svg)](https://www.npmjs.com/package/startbootstrap-sb-admin)
-[![Build Status](https://travis-ci.org/BlackrockDigital/startbootstrap-sb-admin.svg?branch=master)](https://travis-ci.org/BlackrockDigital/startbootstrap-sb-admin)
-[![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin)
-[![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin/dev-status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-sb-admin?type=dev)
+[명령어 그대로 따라치면 됩니다]
+APM설치가 모두 끝나면
+mysql접속 : mysql -u root -p
 
-## Download and Installation
+database 확인 : show database;
 
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/template-overviews/sb-admin/)
-* Install via npm: `npm i startbootstrap-sb-admin`
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-sb-admin.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/BlackrockDigital/startbootstrap-sb-admin)
+database 생성 : create stack; (내 코드가 다 stack이라는 데이터베이스 명으로 접속해서 무조건 stack으로 해야함)
 
-## Usage
+database 접속 : use stack;
 
-### Basic Usage
+table 생성 : 
 
-After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
+create table board_advertisement (
+b_no int unsigned not null primary key auto_increment,
+b_title varchar(100) not null,
+b_content text not null,
+b_date datetime not null,
+b_hit int unsigned not null default 0,
+b_id varchar(20) not null
+)DEFAULT CHARSET=utf8;
 
-### Advanced Usage
+create table comment_advertisement(
+co_no int unsigned not null primary key auto_increment,
+b_no int unsigned not null,
+co_order int unsigned default 0,
+co_content text not null,
+co_id varchar(20) not null
+)DEFAULT CHARSET=utf8;
 
-After installation, run `npm install` and then run `gulp dev` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+create table session(no int, user_id varchar(15), session_id char(127));
 
-#### Gulp Tasks
+create table user(
+no int auto_increment primary key,
+ user_id varchar(15) not null, 
+user_name varchar(30) not null, 
+user_email varchar(30),
+user_pw char(50),
+user_pw_question varchar(30),
+user_pw_answer varchar(30)
+)DEFAULT CHARSET=utf8;
 
-- `gulp` the default task that builds everything
-- `gulp dev` browserSync opens the project in your default browser and live reloads when changes are made
-- `gulp sass` compiles SCSS files into CSS
-- `gulp minify-css` minifies the compiled CSS file
-- `gulp minify-js` minifies the themes JS file
-- `gulp copy` copies dependencies from node_modules to the vendor directory
 
-## Bugs and Issues
+이러면 모든 설정 완료
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-sb-admin/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/sb-admin/).
-
-## Custom Builds
-
-You can hire Start Bootstrap to create a custom build of any template, or create something from scratch using Bootstrap. For more information, visit the **[custom design services page](https://startbootstrap.com/bootstrap-design-services/)**.
-
-## About
-
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
-
-* https://startbootstrap.com
-* https://twitter.com/SBootstrap
-
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
-
-* http://davidmiller.io
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
-
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
-
-## Copyright and License
-
-Copyright 2013-2018 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-sb-admin/blob/gh-pages/LICENSE) license.
