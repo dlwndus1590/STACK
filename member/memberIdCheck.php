@@ -1,7 +1,7 @@
 <?
 $host = 'localhost';
 $user = 'root';
-$pass = 'digh1221';
+$pass = 'song941012!';
 
 $mysqli = new mysqli($host,$user,$pass);
 $ret = mysqli_select_db($mysqli,'stack');

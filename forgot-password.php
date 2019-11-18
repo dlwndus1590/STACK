@@ -2,7 +2,7 @@
 include_once('./mailer.lib.php');
 $host ="localhost";
 $user ="root";
-$pass ="digh1221";
+$pass ="song941012!";
 //mysql 연동
 $mysqli = new mysqli($host,$user,$pass);
 if(!$mysqli){

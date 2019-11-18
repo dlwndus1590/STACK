@@ -40,7 +40,7 @@
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="./member/register.php">Register an Account</a>
-          <a class="d-block small" href="forgot-password.php">Forgot Password?</a>
+          <a class="d-block small" href="./forgot-password.php">Forgot Password?</a>
 	  <a class="d-block small" href="./home.php">home</a>
         </div>
       </div>

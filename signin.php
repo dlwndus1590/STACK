@@ -1,7 +1,7 @@
 <?php
 $host ="localhost";
 $user ="root";
-$pass ="digh1221";
+$pass ="song941012!";
 //연동 확인
 $mysqli = new mysqli($host,$user,$pass);
 if(!$mysqli){

@@ -15,16 +15,16 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
         $content = nl2br($content);
 
     $mail = new PHPMailer(); // defaults to using php "mail()"
-	
-	$mail->IsSMTP(); 
-//	$mail->SMTPDebug = 2; 
-	$mail->SMTPSecure = "ssl";
-	$mail->SMTPAuth = true; 
 
-	$mail->Host = "smtp.naver.com"; 
-	$mail->Port = 465; 
+	$mail->IsSMTP();
+//	$mail->SMTPDebug = 2;
+	$mail->SMTPSecure = "ssl";
+	$mail->SMTPAuth = true;
+
+	$mail->Host = "smtp.naver.com";
+	$mail->Port = 465;
 	$mail->Username = "ggwebsite";
-	$mail->Password = "digh1221"; 
+	$mail->Password = "song941012!"; 
 
     $mail->CharSet = 'UTF-8';
     $mail->From = $fmail;
