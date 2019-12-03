@@ -16,6 +16,109 @@ $ret = mysqli_select_db($mysqli,'stack');
 if(!$ret){
 	die('db connect error:'.mysql_error());
 }
+/* 페이징 시작 */
+	//페이지 get 변수가 있다면 받아오고, 없다면 1페이지를 보여준다.
+	if(isset($_GET['page'])) {
+		$page = $_GET['page'];
+	} else {
+		$page = 1;
+	}
+
+	/* 검색 시작 */
+
+	if(isset($_GET['searchColumn'])) {
+		$searchColumn = $_GET['searchColumn'];
+		$subString .= '&amp;searchColumn=' . $searchColumn;
+	}
+	if(isset($_GET['searchText'])) {
+		$searchText = $_GET['searchText'];
+		$subString .= '&amp;searchText=' . $searchText;
+	}
+
+	if(isset($searchColumn) && isset($searchText)) {
+		$searchSql = ' where ' . $searchColumn . ' like "%' . $searchText . '%"';
+	} else {
+		$searchSql = '';
+	}
+
+	/* 검색 끝 */
+
+	$sql = 'select count(*) as cnt from board_advertisement'. $searchSql;
+	$result = $mysqli->query($sql);
+	$row = $result->fetch_assoc();
+
+	$allPost = $row['cnt']; //전체 게시글의 수
+
+	if(empty($allPost)) {
+	$emptyData = '<tr><td class="textCenter" colspan="5">글이 존재하지 않습니다.</td></tr>';
+	} else {
+	$onePage = 10; // 한 페이지에 보여줄 게시글의 수.
+	$allPage = ceil($allPost / $onePage); //전체 페이지의 수
+
+	if($page < 1 && $page > $allPage) {
+?>
+		<script>
+			alert("존재하지 않는 페이지입니다.");
+			history.back();
+		</script>
+<?php
+		exit;
+	}
+
+	$oneSection = 10; //한번에 보여줄 총 페이지 개수(1 ~ 10, 11 ~ 20 ...)
+	$currentSection = ceil($page / $oneSection); //현재 섹션
+	$allSection = ceil($allPage / $oneSection); //전체 섹션의 수
+
+	$firstPage = ($currentSection * $oneSection) - ($oneSection - 1); //현재 섹션의 처음 페이지
+
+	if($currentSection == $allSection) {
+		$lastPage = $allPage; //현재 섹션이 마지막 섹션이라면 $allPage가 마지막 페이지가 된다.
+	} else {
+		$lastPage = $currentSection * $oneSection; //현재 섹션의 마지막 페이지
+	}
+
+	$prevPage = (($currentSection - 1) * $oneSection); //이전 페이지, 11~20일 때 이전을 누르면 10 페이지로 이동.
+	$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); //다음 페이지, 11~20일 때 다음을 누르면 21 페이지로 이동.
+
+	$paging = '<ul>'; // 페이징을 저장할 변수
+
+	//첫 페이지가 아니라면 처음 버튼을 생성
+	if($page != 1) {
+		$paging .= '<li class="page page_start"><a href="./home.php?page=1' . $subString . '">처음</a></li>';
+	}
+	//첫 섹션이 아니라면 이전 버튼을 생성
+	if($currentSection != 1) {
+		$paging .= '<li class="page page_prev"><a href="./home.php?page=' . $prevPage . $subString . '">이전</a></li>';
+	}
+
+	for($i = $firstPage; $i <= $lastPage; $i++) {
+		if($i == $page) {
+			$paging .= '<li class="page current">' . $i . '</li>';
+		} else {
+			$paging .= '<li class="page"><a href="./home.php?page=' . $i . $subString . '">' . $i . '</a></li>';
+		}
+	}
+
+	//마지막 섹션이 아니라면 다음 버튼을 생성
+	if($currentSection != $allSection) {
+		$paging .= '<li class="page page_next"><a href="./home.php?page=' . $nextPage . $subString . '">다음</a></li>';
+	}
+
+	//마지막 페이지가 아니라면 끝 버튼을 생성
+	if($page != $allPage) {
+		$paging .= '<li class="page page_end"><a href="./home.php?page=' . $allPage . $subString . '">끝</a></li>';
+	}
+	$paging .= '</ul>';
+
+	/* 페이징 끝 */
+
+
+	$currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져오는지
+	$sqlLimit = ' limit ' . $currentLimit . ', ' . $onePage; //limit sql 구문
+
+	$sql = 'select * from board_advertisement' . $searchSql . ' order by b_no desc' . $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
+	$result = $mysqli->query($sql)or die(mysqli_error($mysqli));
+	}
 ?>
 
 <!DOCTYPE html>
@@ -85,28 +188,36 @@ if(!$ret){
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
 
 	<!-- 게시판 -->
-			<li class="nav-item dropdown">
- 				<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	 				<i class="fas fa-fw fa-list"></i>
-	 				<span>게시판</span>
- 				</a>
- 			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-	 			<a class="dropdown-item" href="advertice-table.php">홍보 게시판</a>
-	 			<a class="dropdown-item" href="notice-table.php">공지사항 게시판</a>
- 			</div>
-		</li>
-
-	<!--스레드  -->
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-fw fa-list"></i>
-						<span>스레드</span>
+					<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Board">
+						<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseboard" data-parent="#exampleAccordion">
+							<i class="fa fa-fw fa-file"></i>
+						<span class="nav-link-text">게시판</span>
 					</a>
-				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<a class="dropdown-item" href="thread-table.php">스레드 목록</a>
-					<a class="dropdown-item" href="mythread.php">내 스레드</a>
-				</div>
-			</li>
+					<ul class="sidenav-second-level collapse" id="collapseboard">
+						<li>
+							<a href="advertice-table.php">홍보 게시판</a>
+						</li>
+						<li>
+							<a href="notice-table.php">공지사항 게시판</a>
+						</li>
+				</ul>
+				</li>
+
+		<!--스레드  -->
+					<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+						<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+							<i class="fa fa-fw fa-file"></i>
+								<span class="nav-link-text">스레드</span>
+						</a>
+						<ul class="sidenav-second-level collapse" id="collapseComponents">
+							<li>
+								<a href="thread-table.php">스레드 목록</a>
+							</li>
+							<li>
+								<a href="mythread.php">내 스레드</a>
+							</li>
+						</ul>
+				</li>
 
 			<!--등록-->
 		        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
@@ -169,47 +280,79 @@ if(!$ret){
         <li class="breadcrumb-item active">홍보 게시판</li>
       </ol>
 
-      <!-- SearchBar-->
-      <div class="box">
-        <div class="container-1">
-            <input type="search" id="search" placeholder="검색어를 입력하세요..." />
-              <button><span class="icon"><i class="fa fa-search"></i></span></button>
-        </div>
-      </div>
-
       <!--옵션선택 카테고리-->
 
 
       <!-- table-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fas fa-table"></i>
-          홍보 게시판</div>
-          <div class="card-body">
-            <dic class="table-responsive">
-              <table class="table table-borded" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>글 번호</th>
-                    <th>타입</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>글 번호</th>
-                    <th>타입</th>
-                    <th>제목</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
-                  </tr>
-                </tfoot>
+			<!-- free-community start-->
+				<article class="boardArticle">
+						<div class="card mb-3" style="width:1500px; margin-left:150px; ">
+							<div class="card-header">
+								<i class="fa fa-table"></i> 홍보 게시판 </div>
+						<div id="boardList">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-bordered"  style="width:100%"cellspacing="0">
+										<thead>
+											<tr>
+												<th style="text-align: center;">번호</th>
+												<th style="text-align: center;">제목</th>
+												<th style="text-align: center;">내용</th>
+												<th style="text-align: center;">작성 일자</th>
+												<th style="text-align: center;">조회수</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th style="text-align: center;">번호</th>
+												<th style="text-align: center;">제목</th>
+												<th style="text-align: center;">내용</th>
+												<th style="text-align: center;">작성 일자</th>
+												<th style="text-align: center;">조회수</th>
+											</tr>
+										</tfoot>
+										<tbody>
 
-             </table>
-          </div>
-        </div>
+
+
+
+										</tbody>
+									</table>
+					</div>
+					<div class="btnSet">
+					<?php if(isset($_SESSION['is_login'])){//세션 값이 있을때 = "로그인 이후 상태"
+					?>
+					<a class="btnWrite btn" href="write/write.php">글쓰기</a>
+
+					<?php
+					}else{
+					?>
+					<a href="#" class="btnWrite btn" onclick="writestatus()">글쓰기</a>
+					<?php
+					}
+					?>
+					</div>
+							</div>
+					<div class="paging">
+					<?php echo $paging ?>
+					</div>
+						<div class="searchBox">
+							<form action="./advertice-table.php" method="get">
+								<select name="searchColumn">
+									<option <?php echo $searchColumn=='b_title'?'selected="selected"':null?> value="b_title">제목</option>
+									<option <?php echo $searchColumn=='b_content'?'selected="selected"':null?> value="b_content">내용</option>
+									<option <?php echo $searchColumn=='b_id'?'selected="selected"':null?> value="b_id">작성자</option>
+								</select>
+								<input type="text" name="searchText" value="<?php echo isset($searchText)?$searchText:null?>">
+								<button type="submit">검색</button>
+							</form>
+						</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</div>
+
 
 
     <!-- /.container-fluid-->

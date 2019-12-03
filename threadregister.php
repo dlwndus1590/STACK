@@ -1,3 +1,5 @@
+<!-- 스레드 가입신청 -->
+
 <?php
 //세션사용을 하기 위한 필수메서드, 세션사용선언
 session_start();
@@ -118,6 +120,7 @@ if(!$ret){
 	$result = $mysqli->query($sql)or die(mysqli_error($mysqli));
 	}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,6 +131,19 @@ if(!$ret){
   <meta name="description" content="">
   <meta name="author" content="">
   <title>STACK</title>
+
+    <!--Font Awesome-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
   <!--a태그 클릭시 색깔 바뀌게 하기-->
   <style type="text/css">
   a:link{text-decoration: none; color: #2E64FE;}
@@ -147,65 +163,16 @@ if(!$ret){
   <link href="css/sb-admin.css" rel="stylesheet">
   <link rel="stylesheet" href="./css1/normalize.css" />
   <link rel="stylesheet" href="./css1/board.css" />
-
-
+  <link href="css/search.css" rel="stylesheet">
   <script src="./js1/jquery-2.1.3.min.js"></script>
-  <title>HOMEPAGE</title>
+  <title>????</title>
   <script language="javascript">
 
 
-//== 로그인 안한상태에서 글쓰기 버튼 클릭시 alert띄우기==
-	function writestatus(){
-		alert("로그인 이후 글쓰기가 가능합니다");
-	}
-// === 쿠키값 가져오기 ===
-    function getCookie(name) {
-      var Found = false
-      var start, end
-      var i = 0
 
-      while(i <= document.cookie.length) {
-        start = i
-        end = start + name.length
 
-        if(document.cookie.substring(start, end) == name) {
-          Found = true
-          break
-        }
-        i++
-      }
-
-      if(Found == true) {
-        start = end + 1
-        end = document.cookie.indexOf(";", start)
-          if(end < start)
-            end = document.cookie.length
-        return document.cookie.substring(start, end)
-      }
-      return ""
-    }
-//쿠키 삭제하기.
-  function deleteCookie(cookieName){
-	var expireDate = new Date();
-
-	expireDate.setDate( expireDate.getDate() -1);
-	document.cookie = cookieName + "=" + "; expires=" + expireDate.toGMTString() + "; path=/";
-	alert("쿠키가 삭제되었습니다.");
-  }
-
-  function openPopup(){
-        var noticeCookie=getCookie("popup");  // 쿠키변수 이름
-
-        if (noticeCookie != "no"){
-		window.open('08_2_popup.html','pop1', "width=470, height=450, left=100, top=50");
-        }else{alert('쿠키가 걸려있음.')}
-        // window.open('팝업창 웹페이지','윈도우명','width=350,height=400,top=50,left=150');
-    }
   </script>
-
-
-
-</head>
+  </head>
 
 <!-- 삽입해야 할 소스 끝 -->
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -220,37 +187,37 @@ if(!$ret){
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
 
-	<!-- 게시판 -->
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Board">
-					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseboard" data-parent="#exampleAccordion">
-						<i class="fa fa-fw fa-file"></i>
-	 				<span class="nav-link-text">게시판</span>
- 				</a>
- 				<ul class="sidenav-second-level collapse" id="collapseboard">
-					<li>
-	 					<a href="advertice-table.php">홍보 게시판</a>
-					</li>
-					<li>
-	 					<a href="notice-table.php">공지사항 게시판</a>
-					</li>
- 			</ul>
-		</li>
-
-	<!--스레드  -->
-				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-						<i class="fa fa-fw fa-file"></i>
-						  <span class="nav-link-text">스레드</span>
-					</a>
-					<ul class="sidenav-second-level collapse" id="collapseComponents">
-						<li>
-							<a href="thread-table.php">스레드 목록</a>
-						</li>
-						<li>
-							<a href="mythread.php">내 스레드</a>
-						</li>
+					<!-- 게시판 -->
+						<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Board">
+							<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseboard" data-parent="#exampleAccordion">
+								<i class="fa fa-fw fa-file"></i>
+							<span class="nav-link-text">게시판</span>
+						</a>
+						<ul class="sidenav-second-level collapse" id="collapseboard">
+							<li>
+								<a href="advertice-table.php">홍보 게시판</a>
+							</li>
+							<li>
+								<a href="notice-table.php">공지사항 게시판</a>
+							</li>
 					</ul>
-			</li>
+					</li>
+
+					<!--스레드  -->
+						<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+							<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+								<i class="fa fa-fw fa-file"></i>
+									<span class="nav-link-text">스레드</span>
+							</a>
+							<ul class="sidenav-second-level collapse" id="collapseComponents">
+								<li>
+									<a href="thread-table.php">스레드 목록</a>
+								</li>
+								<li>
+									<a href="mythread.php">내 스레드</a>
+								</li>
+							</ul>
+					</li>
 
 			<!--등록-->
 		        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
@@ -267,10 +234,11 @@ if(!$ret){
 		                  <a href="forgot-password.php">비밀번호 찾기</a>
 		                </li>
 
+		            <li>
+
+		            </li>
 		          </ul>
 		        </li>
-
-
 		      </ul>
 		      <ul class="navbar-nav sidenav-toggler">
 		        <li class="nav-item">
@@ -301,161 +269,35 @@ if(!$ret){
 		      </ul>
 		    </div>
 		  </nav>
-			<!-- nav end-->
-
-
-  	<div class="content-wrapper">
-
+  <!-- nav end-->
+  <div class="content-wrapper">
     <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="home.php" >STACK</a>
+        </li>
+        <li class="breadcrumb-item active">참여중 게시판</li>
+      </ol>
 
 
-				  <!-- Breadcrumbs-->
-		      <ol class="breadcrumb">
-		        <li class="breadcrumb-item">
-		          <a href="home.php" >STACK</a>
-		        </li>
-		        <li class="breadcrumb-item active">home</li>
-		      </ol>
-
-					<!-- image-->
-						<div class="col-lg-10">
-		          <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-		            <ol class="carousel-indicators">
-		              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-		              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-		              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-		            </ol>
-		            <div class="carousel-inner" role="listbox">
-									<center>
-		              <div class="carousel-item active">
-		                <img class="d-block img-fluid" src="firstpic.png" alt="First slide" >
-		              </div>
-		              <div class="carousel-item">
-		                <img class="d-block img-fluid" src="secondpic.png" alt="Second slide" >
-		              </div>
-		              <div class="carousel-item">
-		                <img class="d-block img-fluid" src="thirdpic.png" alt="Third slide" >
-		              </div>
-								</center>
-		            </div>
-		            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-		              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		              <span class="sr-only">Previous</span>
-		            </a>
-		            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-		              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-		              <span class="sr-only">Next</span>
-		            </a>
-		          </div>
-						</div>
+      <!--thread 상세페이지 -->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          스레드 상세페이지 </div>
+          <div class="card-body">
+              <img src="example1.png" alt="스레드 프로필사진" style="margin-left:auto; margin-right:auto; display:block;"/ >
+          </div>
+        </div>
 
 
 
-				      <!-- free-community start-->
-								<article class="boardArticle">
-										<div class="card mb-3" style="width:1500px; margin-left:150px; ">
-											<div class="card-header">
-												<i class="fa fa-table"></i> 자유게시판</div>
-										<div id="boardList">
-											<div class="card-body">
-												<div class="table-responsive">
-													<table class="table table-bordered"  style="width:100%"cellspacing="0">
-														<thead>
-															<tr>
-																<th style="text-align: center;">번호</th>
-																<th style="text-align: center;">제목</th>
-																<th style="text-align: center;">내용</th>
-																<th style="text-align: center;">작성일</th>
-																<th style="text-align: center;">조회수</th>
-															</tr>
-														</thead>
-														<tfoot>
-															<tr>
-																<th style="text-align: center;">번호</th>
-																<th style="text-align: center;">제목</th>
-																<th style="text-align: center;">내용</th>
-																<th style="text-align: center;">작성일</th>
-																<th style="text-align: center;">조회수</th>
-															</tr>
-														</tfoot>
-														<tbody>
-											<?php
-									if(isset($emptyData)) {
-									echo $emptyData;
-									} else {
-														while($row = mysqli_fetch_assoc($result))
-												{
-										$datetime = explode(' ',$row['b_date']);
-										$date = $datetime[0];
-										$time = $datetime[1];
-										if($date == Date('Y-m-d'))
-											$row['b_date']=$time;
-										else
-											$row['b_date']=$date;
-										?>
-									<?php
-									//댓글 갯수 뽑아오기
-									$cosql = 'select count(*) as cnt from comment_advertisement where b_no = '.$row['b_no'];
-									$coresult = mysqli_query($mysqli,$cosql);
-									$corow = mysqli_fetch_assoc($coresult);
-									?>
-															<tr>
-																<td class="no"><?php echo $row['b_no']?></td>
-									<!--write/view.php?bno에서 마지막 bno는 view.php에서 GET으로 받는다. 그 bno값은 row['b_no']이다.-->
-																<td class="title">
-										<a href="write/view.php?bno=<?php echo $row['b_no']?>"><?php echo $row['b_title']?><?php if($corow['cnt'] > 0){?><?php echo '('.$corow['cnt'].')'?></a>
-										<?php } ?>
-									<?
-									if($row['b_date'] == $time){
-									echo "<img src='./images-4.png' width='20' heigh='20'/>";
-									}
-									?>
-										</a>
-										 </td>
-																<td class="author"><?php echo $row['b_id']?></td>
-																<td class="date"><?php echo $row['b_date']?></td>
-																<td class="hit"><?php echo $row['b_hit']?></td>
-															</tr>
-									<?php
-										}
-									}
-									?>
-														</tbody>
-													</table>
-									</div>
-									<div class="btnSet">
-									<?php if(isset($_SESSION['is_login'])){//세션 값이 있을때 = "로그인 이후 상태"
-									?>
-									<a class="btnWrite btn" href="write/write.php">글쓰기</a>
 
-									<?php
-									}else{
-									?>
-									<a href="#" class="btnWrite btn" onclick="writestatus()">글쓰기</a>
-									<?php
-									}
-									?>
-									</div>
-											</div>
-									<div class="paging">
-									<?php echo $paging ?>
-									</div>
-										<div class="searchBox">
-											<form action="./home.php" method="get">
-												<select name="searchColumn">
-													<option <?php echo $searchColumn=='b_title'?'selected="selected"':null?> value="b_title">제목</option>
-													<option <?php echo $searchColumn=='b_content'?'selected="selected"':null?> value="b_content">내용</option>
-													<option <?php echo $searchColumn=='b_id'?'selected="selected"':null?> value="b_id">작성자</option>
-												</select>
-												<input type="text" name="searchText" value="<?php echo isset($searchText)?$searchText:null?>">
-												<button type="submit">검색</button>
-											</form>
-										</div>
-										</div>
-								 	</div>
-								</article>
-							</div>
-						</div>
+			</div>
+		</div>
+
+
 
 
 

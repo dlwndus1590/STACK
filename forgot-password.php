@@ -100,7 +100,7 @@ if($corow['cnt'] > 0 && $user_id != null && $row['user_pw_question'] == $find_qu
         <div class="text-center">
           <a class="d-block small mt-3" href="./member/register.php">Register an Account</a>
           <a class="d-block small" href="login.php">Login Page</a>
-	  <a class="d-block small" href="./home.php">home</a>
+	  <a class="d-block small" href="../home.php">home</a>
         </div>
       </div>
     </div>

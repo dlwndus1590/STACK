@@ -230,29 +230,37 @@ if(!$ret){
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
 
-	<!-- 게시판 -->
-			<li class="nav-item dropdown">
- 				<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	 				<i class="fas fa-fw fa-list"></i>
-	 				<span>게시판</span>
- 				</a>
- 			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-	 			<a class="dropdown-item" href="advertice-table.php">홍보 게시판</a>
-	 			<a class="dropdown-item" href="notice-table.php">공지사항 게시판</a>
- 			</div>
-		</li>
+					<!-- 게시판 -->
+						<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Board">
+							<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseboard" data-parent="#exampleAccordion">
+								<i class="fa fa-fw fa-file"></i>
+							<span class="nav-link-text">게시판</span>
+						</a>
+						<ul class="sidenav-second-level collapse" id="collapseboard">
+							<li>
+								<a href="advertice-table.php">홍보 게시판</a>
+							</li>
+							<li>
+								<a href="notice-table.php">공지사항 게시판</a>
+							</li>
+					</ul>
+					</li>
 
-	<!--스레드  -->
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-fw fa-list"></i>
-						<span>스레드</span>
-					</a>
-				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<a class="dropdown-item" href="thread-table.php">스레드 목록</a>
-					<a class="dropdown-item" href="mythread.php">내 스레드</a>
-				</div>
-			</li>
+					<!--스레드  -->
+						<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+							<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+								<i class="fa fa-fw fa-file"></i>
+									<span class="nav-link-text">스레드</span>
+							</a>
+							<ul class="sidenav-second-level collapse" id="collapseComponents">
+								<li>
+									<a href="thread-table.php">스레드 목록</a>
+								</li>
+								<li>
+									<a href="mythread.php">내 스레드</a>
+								</li>
+							</ul>
+					</li>
 
 			<!--등록-->
 		        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
@@ -316,78 +324,42 @@ if(!$ret){
       </ol>
 
       <!--table-->
-    <article class="boardArticle">
-      <div class="card mb-3" style="width:900px; margin-left:200px; margin-right:200px;">
-		           <div class="card-header">
-		             <i class="fas fa-table"></i>
-		             공지사항 게시판</div>
-		           <div class="card-body">
-		             <div class="table-responsive">
-		               <table class="table table-bordered" id="boadList" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th style="text-align: center;">번호</th>
-                  <th style="text-align: center;">제목</th>
-                  <th style="text-align: center;">작성자</th>
-                  <th style="text-align: center;">작성일</th>
-                  <th style="text-align: center;">조회</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th style="text-align: center;">번호</th>
-                  <th style="text-align: center;">제목</th>
-                  <th style="text-align: center;">작성자</th>
-                  <th style="text-align: center;">작성일</th>
-                  <th style="text-align: center;">조회</th>
-                </tr>
-              </tfoot>
-              <tbody>
-	   	  <?php
-		if(isset($emptyData)) {
-		echo $emptyData;
-		} else {
-	            while($row = mysqli_fetch_assoc($result))
-	   	    {
-			$datetime = explode(' ',$row['b_date']);
-			$date = $datetime[0];
-			$time = $datetime[1];
-			if($date == Date('Y-m-d'))
-				$row['b_date']=$time;
-			else
-				$row['b_date']=$date;
-		  ?>
-<?php
-//댓글 갯수 뽑아오기
-$cosql = 'select count(*) as cnt from comment_advertisement where b_no = '.$row['b_no'];
-$coresult = mysqli_query($mysqli,$cosql);
-$corow = mysqli_fetch_assoc($coresult);
-?>
-                <tr>
-                  <td class="no"><?php echo $row['b_no']?></td>
-		<!--write/view.php?bno에서 마지막 bno는 view.php에서 GET으로 받는다. 그 bno값은 row['b_no']이다.-->
-                  <td class="title">
-			<a href="write/view.php?bno=<?php echo $row['b_no']?>"><?php echo $row['b_title']?><?php if($corow['cnt'] > 0){?><?php echo '('.$corow['cnt'].')'?></a>
-			<?php } ?>
-<?
-if($row['b_date'] == $time){
-echo "<img src='./images-4.png' width='20' heigh='20'/>";
-}
-?>
-		  </a>
-		   </td>
-                  <td class="author"><?php echo $row['b_id']?></td>
-                  <td class="date"><?php echo $row['b_date']?></td>
-                  <td class="hit"><?php echo $row['b_hit']?></td>
-                </tr>
-		<?php
-			}
-		}
-		?>
-              </tbody>
-            </table>
-	</div>
-<div class="btnSet">
+			<article class="boardArticle">
+					<div class="card mb-3" style="width:1500px; margin-left:150px; ">
+						<div class="card-header">
+							<i class="fa fa-table"></i> 공지 게시판  </div>
+					<div id="boardList">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered"  style="width:100%"cellspacing="0">
+									<thead>
+										<tr>
+											<th style="text-align: center;">번호</th>
+											<th style="text-align: center;">제목</th>
+											<th style="text-align: center;">내용</th>
+											<th style="text-align: center;">작성 일자</th>
+											<th style="text-align: center;">조회수</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th style="text-align: center;">번호</th>
+											<th style="text-align: center;">제목</th>
+											<th style="text-align: center;">내용</th>
+											<th style="text-align: center;">작성 일자</th>
+											<th style="text-align: center;">조회수</th>
+										</tr>
+									</tfoot>
+									<tbody>
+
+
+
+
+									</tbody>
+								</table>
+							</div>
+							<div class="btnSet">
+
 <?php if(isset($_SESSION['is_login'])){//세션 값이 있을때 = "로그인 이후 상태"
 ?>
 	<a class="btnWrite btn" href="write/write.php">글쓰기</a>
@@ -405,7 +377,7 @@ echo "<img src='./images-4.png' width='20' heigh='20'/>";
 		<?php echo $paging ?>
 	</div>
 			<div class="searchBox">
-				<form action="./home.php" method="get">
+				<form action="./notice-table.php" method="get">
 					<select name="searchColumn">
 						<option <?php echo $searchColumn=='b_title'?'selected="selected"':null?> value="b_title">제목</option>
 						<option <?php echo $searchColumn=='b_content'?'selected="selected"':null?> value="b_content">내용</option>
